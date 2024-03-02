@@ -1,0 +1,15 @@
+.item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.item img {
+    width: 100%;
+}
+
+.itemName {
+    font-size: 12px;
+    margin-top: 2px;
+    text-align: center;
+    color: #00000040;
+}
