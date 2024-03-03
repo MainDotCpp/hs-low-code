@@ -2,28 +2,29 @@ import { useDrag } from 'react-dnd';
 import React, { useRef } from 'react';
 import styles from './component.module.css';
 import { v4 as uuid } from 'uuid';
+import { ComponentType } from '@/app/components/components';
 
-const Component = ({
+const ImageComponent = ({
   props,
   btn,
-  children,
   mode = 'add',
 }: {
+  name?: string;
   mode?: 'add' | 'sort';
-  props?: any;
+  props?: ComponentType<any>;
   btn?: boolean;
-  children?: React.JSX.Element;
 }) => {
   const ref = useRef(null);
   const [, drag] = useDrag({
-    type: 'div',
+    type: 'image',
     item: {
-      id: uuid(),
-      accept: ['div', 'a', 'image', 'text'],
-      name: '容器',
+      id: mode === 'add' ? uuid() : props?.id,
       mode: mode,
-      type: 'div',
-      style: { minHeight: 30 },
+      name: '图片',
+      accept: [],
+      type: 'image',
+      src: 'https://fakeimg.pl/300',
+      style: {},
       children: [],
     },
     collect: (monitor) => ({
@@ -34,11 +35,13 @@ const Component = ({
   if (btn) {
     return (
       <div ref={ref} className={styles.component}>
-        容器
+        图片
       </div>
     );
   }
-  return <div ref={ref} {...props}></div>;
+  // @ts-ignore
+  // eslint-disable-next-line @next/next/no-img-element
+  return <img ref={ref} {...props} alt={''} />;
 };
 
-export default Component;
+export default ImageComponent;

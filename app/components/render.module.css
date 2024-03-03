@@ -1,8 +1,41 @@
 
 .app {
     background-color: white;
+    display: flex;
+    flex-direction: column;
     border: 1px solid #00000030;
     height: 100%;
     max-width: 428px;
     margin: 0 auto;
+}
+
+.isOver {
+    background-color: #91a7ff30!important;
+}
+
+.target-bar {
+    height: 20px;
+    border: 2px solid blue;
+    background-color: red;
+}
+
+/*组件盒子*/
+.componentBox {
+    position: relative;
+    box-sizing: border-box;
+}
+/*
+    Path: app/components/label.module.css
+    组件标签
+*/
+.componentLabel {
+    position: absolute;
+    background-color: #00000030;
+    font-size: 12px;
+    padding-inline: 12px 8px;
+    border-bottom-left-radius: 8px;
+    color: white;
+    right: 0;
+    top: 0;
+
 }
