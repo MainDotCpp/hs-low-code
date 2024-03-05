@@ -1,44 +1,57 @@
-import { useDrag } from 'react-dnd';
-import React, { useRef } from 'react';
+'use client';
+import React from 'react';
 import styles from './component.module.css';
-import { v4 as uuid } from 'uuid';
+import { Draggable } from 'react-beautiful-dnd';
+import { COMPONENT_MAPPING } from '@/app/components/component-mapping';
+import { usePageStore } from '@/store/use-page-store';
 
 const Component = ({
   props,
-  btn,
-  children,
-  mode = 'add',
+  index = 0,
+  mode,
 }: {
-  mode?: 'add' | 'sort';
   props?: any;
-  btn?: boolean;
-  children?: React.JSX.Element;
+  index?: number;
+  mode: 'edit' | 'show';
 }) => {
-  const ref = useRef(null);
-  const [, drag] = useDrag({
-    type: 'div',
-    item: {
-      id: uuid(),
-      accept: ['div', 'a', 'image', 'text'],
-      name: '容器',
-      mode: mode,
-      type: 'div',
-      style: { minHeight: 30 },
-      children: [],
-    },
-    collect: (monitor) => ({
-      isDragging: monitor.isDragging(),
-    }),
-  });
-  drag(ref);
-  if (btn) {
-    return (
-      <div ref={ref} className={styles.component}>
-        容器
+  // @ts-ignore
+  const schema = COMPONENT_MAPPING[props.type];
+  let Node = schema.Component;
+  if (!props?.id) {
+    Node = (params: any) => (
+      <div className={styles.component}>
+        <div>{props?.name}</div>
       </div>
     );
   }
-  return <div ref={ref} {...props}></div>;
+
+  const currentComponentId = usePageStore((state) => state.currentComponentId);
+  const setCurrentComponentId = usePageStore(
+    (state) => state.setCurrentComponentId,
+  );
+
+  return (
+    <Draggable
+      key={props?.id || props.type}
+      draggableId={props?.id || props.type}
+      isDragDisabled={mode === 'show'}
+      index={index}>
+      {(provided, snapshot) => {
+        return (
+          <div
+            ref={provided.innerRef}
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
+            onClick={() => {
+              if (mode === 'edit' && props.id) setCurrentComponentId(props.id);
+            }}
+            className={` ${props.id && currentComponentId === props.id ? styles.activeComponent : ''}`}>
+            <Node className={`${props.animated}`} {...props} mode={mode} />
+          </div>
+        );
+      }}
+    </Draggable>
+  );
 };
 
 export default Component;

@@ -1,8 +1,35 @@
 
 .component {
+    box-sizing: border-box;
     width: 100%;
     border: 1px solid #00000010;
     text-align: center;
     color: #00000090;
     line-height: 30px;
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+}
+
+.component:hover {
+    box-shadow:
+            2.8px 2.8px 2.2px rgba(0, 0, 0, 0.003),
+            6.7px 6.7px 5.3px rgba(0, 0, 0, 0.004),
+            12.5px 12.5px 10px rgba(0, 0, 0, 0.005),
+            22.3px 22.3px 17.9px rgba(0, 0, 0, 0.006),
+            41.8px 41.8px 33.4px rgba(0, 0, 0, 0.007),
+            100px 100px 80px rgba(0, 0, 0, 0.01)
+;
+}
+
+.activeComponent:after {
+    content: 'V';
+    font-size: 12px;
+    line-height: 20px;
+    padding: 0 8px;
+    position: absolute;
+    color: white;
+    right: 0;
+    top: 0;
+    background-color:#9775fa99 ;
 }

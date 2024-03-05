@@ -3,10 +3,16 @@
     background-color: white;
     display: flex;
     flex-direction: column;
-    border: 1px solid #00000030;
+    align-items: center;
     height: 100%;
-    max-width: 428px;
+    max-width: 430px;
     margin: 0 auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.app > div {
+    position: relative;
+    width: 100%;
 }
 
 .isOver {
