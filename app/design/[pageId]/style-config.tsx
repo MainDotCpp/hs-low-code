@@ -1,10 +1,11 @@
 import {
-  ProFormDigit,
-  ProFormRadio,
+  ProFormColorPicker,
+  ProFormItem,
   ProFormSelect,
   ProFormSlider,
-  ProFormText,
 } from '@ant-design/pro-components';
+import { ColorPicker } from 'antd';
+import { Color } from 'antd/es/color-picker';
 
 const animatedMapping = [
   {
@@ -301,6 +302,17 @@ const animatedMapping = [
 const StyleConfig = () => {
   return (
     <>
+      <ProFormColorPicker
+        label='背景颜色'
+        transform={(v: Color) => {
+          if (typeof v === 'string') return;
+          return {
+            style: {
+              backgroundColor: `#${v.toHex()}`,
+            },
+          };
+        }}
+        name={['style', 'backgroundColor']}></ProFormColorPicker>
       <ProFormSlider
         name={['style', 'paddingBlock']}
         label='上下边距'

@@ -1,0 +1,37 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model t_domain {
+  id        String   @id @db.Uuid
+  domain    String   @db.VarChar(255)
+  area      String   @db.VarChar(255)
+  status    Int      @default(0)
+  create_at DateTime @default(now()) @db.Timestamp(6)
+}
+
+model t_page {
+  id                String    @id @db.Uuid
+  title             String?   @db.VarChar(32)
+  create_at         DateTime? @default(now()) @db.Timestamp(6)
+  ban_redirect_link String?   @db.VarChar(255)
+  ban_count         Int       @default(0)
+  access_count      Int       @default(0)
+  content           Json?     @default("[]") @db.Json
+  status            Int       @default(0)
+  click_link_count  Int       @default(0)
+}
+
+model t_visit_log {
+  id                 Int      @id @default(autoincrement())
+  user_agent         String?
+  language           String?
+  host               String?
+  create_at          DateTime @default(now())
+  sec_ch_ua_platform String?
+}
