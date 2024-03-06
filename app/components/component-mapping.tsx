@@ -4,6 +4,7 @@ import RichTextComponent from '@/app/components/rich-text-component';
 import SwiperComponent from '@/app/components/swiper-component';
 import CommentComponent from '@/app/components/comment-component';
 import { v4 } from 'uuid';
+import VideoComponent from '@/app/components/video-component';
 
 export const COMPONENT_MAPPING = {
   image: {
@@ -83,6 +84,15 @@ export const COMPONENT_MAPPING = {
           content: '内容',
         },
       ],
+    },
+  },
+  video: {
+    ...VideoComponent,
+    initValue: {
+      name: '视频组件',
+      type: 'video',
+      src: 'https://www.w3school.com.cn/i/movie.mp4',
+      style: { width: '100%', boxSizing: 'border-box' },
     },
   },
 };

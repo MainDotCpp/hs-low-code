@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import JSFtp from 'jsftp';
+import { v4 } from 'uuid';
 
 export const POST = (req: NextRequest) => {
   return new Promise((resolve, reject) => {
@@ -26,7 +27,8 @@ export const POST = (req: NextRequest) => {
       const file =
         (formData.get('files') as File) || (formData.get('file') as File);
       const buffer = Buffer.from(await file.arrayBuffer());
-      ftp.put(buffer, file.name, (err) => {
+      const name = `${v4()}_${file.name}`;
+      ftp.put(buffer, name, (err) => {
         if (err) {
           console.log('上传失败', err);
           reject(
@@ -39,7 +41,7 @@ export const POST = (req: NextRequest) => {
         resolve(
           NextResponse.json({
             success: true,
-            path: `http://66.112.210.231/${file.name}`,
+            path: `https://leuandev.xyz/access/${name}`,
           }),
         );
       });

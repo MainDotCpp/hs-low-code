@@ -7,7 +7,9 @@ import { UploadFile, UploadProps } from 'antd';
 import { v4 } from 'uuid';
 import React from 'react';
 
-const FileUpload = (props: ProFormUploadDraggerProps & { btn?: boolean }) => {
+const FileUpload = (
+  props: ProFormUploadDraggerProps & { btn?: boolean; dir?: string },
+) => {
   const Element = props.btn ? ProFormUploadButton : ProFormUploadDragger;
   return (
     <Element
