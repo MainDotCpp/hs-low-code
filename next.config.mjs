@@ -9,6 +9,14 @@ const nextConfig = {
         // your project has ESLint errors.
         ignoreDuringBuilds: true,
     },
+    experimental: {
+        serverActions: {
+            allowedOrigins: [
+                'http://localhost',
+                'http://leuandev.xyz'
+            ]
+        }
+    },
     sassOptions: {
         includePaths: ["app"],
     }
