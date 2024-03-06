@@ -31,6 +31,7 @@ export const saveOrUpdatePage = async (page: t_page) => {
   'use server';
   if (!page.id) {
     page.id = uuidv4();
+    page.status = 1;
     return mainDb.t_page.create({ data: page });
   }
   return mainDb.t_page.update({
