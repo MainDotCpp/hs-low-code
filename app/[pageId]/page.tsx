@@ -11,7 +11,9 @@ export default async function Home({ params }: any) {
   return (
     <>
       <title>{page.title}</title>
-      <Script dangerouslySetInnerHTML={{ __html: page.script || '' }}></Script>
+      <Script
+        id={params.pageId}
+        dangerouslySetInnerHTML={{ __html: page.script || '' }}></Script>
       <main className={styles.main}>
         {page ? <Preview params={params} data={page}></Preview> : <Empty />}
       </main>
