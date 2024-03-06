@@ -6,10 +6,12 @@ import { COMPONENT_MAPPING } from '@/app/components/component-mapping';
 import { usePageStore } from '@/store/use-page-store';
 
 const Component = ({
+  pageId,
   props,
   index = 0,
   mode,
 }: {
+  pageId: string;
   props?: any;
   index?: number;
   mode: 'edit' | 'show';
@@ -48,6 +50,7 @@ const Component = ({
             className={` ${props.id && currentComponentId === props.id ? styles.activeComponent : ''}`}>
             <Node
               className={`${props.animated} ${props.animatedInfinite ? 'animate__infinite' : ''}`}
+              pageId={pageId}
               {...props}
               mode={mode}
             />

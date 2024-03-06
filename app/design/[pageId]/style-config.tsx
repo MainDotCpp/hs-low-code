@@ -1,4 +1,5 @@
 import {
+  ProForm,
   ProFormCheckbox,
   ProFormColorPicker,
   ProFormGroup,
@@ -6,7 +7,7 @@ import {
   ProFormSelect,
   ProFormSlider,
 } from '@ant-design/pro-components';
-import { ColorPicker } from 'antd';
+import { Col, ColorPicker } from 'antd';
 import { Color } from 'antd/es/color-picker';
 
 const animatedMapping = [
@@ -315,16 +316,42 @@ const StyleConfig = () => {
           };
         }}
         name={['style', 'backgroundColor']}></ProFormColorPicker>
-      <ProFormSlider
-        name={['style', 'paddingBlock']}
-        label='上下边距'
-        min={0}
-        max={400}></ProFormSlider>
-      <ProFormSlider
-        min={0}
-        max={400}
-        name={['style', 'paddingInline']}
-        label='左右边距'></ProFormSlider>
+      <ProForm.Group grid>
+        <Col span={12}>
+          <ProFormSlider
+            name={['style', 'paddingBlock']}
+            label='上下内边距'
+            step={2}
+            min={0}
+            max={400}></ProFormSlider>
+        </Col>
+        <Col span={12}>
+          <ProFormSlider
+            min={0}
+            step={2}
+            max={400}
+            name={['style', 'paddingInline']}
+            label='左右内边距'></ProFormSlider>
+        </Col>
+      </ProForm.Group>
+      <ProForm.Group grid>
+        <Col span={12}>
+          <ProFormSlider
+            name={['style', 'marginBlock']}
+            label='上下外边距'
+            step={2}
+            min={0}
+            max={400}></ProFormSlider>
+        </Col>
+        <Col span={12}>
+          <ProFormSlider
+            min={0}
+            step={2}
+            max={400}
+            name={['style', 'marginInline']}
+            label='左右外边距'></ProFormSlider>
+        </Col>
+      </ProForm.Group>
       <ProFormSlider
         name={['style', 'borderRadius']}
         label='圆角'

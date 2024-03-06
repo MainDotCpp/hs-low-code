@@ -1,0 +1,36 @@
+
+.comments {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.comment {
+  display: grid;
+  grid-template-columns: 50px 1fr;
+  gap: 8px;
+
+  :global {
+    .avatar {
+      justify-self: center;
+      align-self: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background-color: #00000011;
+    }
+
+    .name {
+      font-weight: bold;
+      color: #000000CC;
+    }
+
+    .body {
+      padding: 10px 0;
+      border-bottom: 1px solid #00000011;
+    }
+    .content {
+      color: #00000099;
+    }
+  }
+}

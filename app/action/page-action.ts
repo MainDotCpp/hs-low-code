@@ -37,8 +37,13 @@ export const saveOrUpdatePage = async (page: t_page) => {
     where: {
       id: page.id,
     },
-    update: page,
+    data: page,
   });
+};
+
+export const getPages = async () => {
+  'use server';
+  return mainDb.t_page.findMany();
 };
 
 export const copyPage = async (id: string) => {
@@ -48,4 +53,30 @@ export const copyPage = async (id: string) => {
   page.id = uuidv4();
   page.name = page.name + '-复制';
   return mainDb.t_page.create({ data: page });
+};
+
+export const visit = async (pageId: string) => {
+  'use server';
+  return mainDb.t_page.update({
+    where: {
+      id: pageId,
+    },
+    data: {
+      access_count: {
+        increment: 1,
+      },
+    },
+  });
+};
+export const clickLink = (pageId: string) => {
+  return mainDb.t_page.update({
+    where: {
+      id: pageId,
+    },
+    data: {
+      click_link_count: {
+        increment: 1,
+      },
+    },
+  });
 };

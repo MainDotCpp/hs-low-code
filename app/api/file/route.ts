@@ -23,7 +23,8 @@ export const POST = (req: NextRequest) => {
       } catch (e) {
         return NextResponse.json({});
       }
-      const file = formData.get('files') as File;
+      const file =
+        (formData.get('files') as File) || (formData.get('file') as File);
       const buffer = Buffer.from(await file.arrayBuffer());
       ftp.put(buffer, file.name, (err) => {
         if (err) {

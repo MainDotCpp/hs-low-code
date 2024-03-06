@@ -39,9 +39,9 @@ const Config = () => {
       <ProForm
         initialValues={currentComponent}
         key={currentComponent?.id}
-        onValuesChange={(values) => {
-          console.log(values);
-          updateComponent(currentComponent.id, values);
+        onValuesChange={(value) => {
+          console.log(value);
+          updateComponent(currentComponent.id, value);
         }}
         submitter={false}>
         <div className={styles.configHeader}>
@@ -49,6 +49,8 @@ const Config = () => {
           <div className='id'>{currentComponent.id}</div>
         </div>
         <ProFormText name='id' label='组件ID' hidden></ProFormText>
+        <ProFormText name='type' hidden></ProFormText>
+        <ProFormText name='name' hidden></ProFormText>
         <Collapse items={collapseItems} defaultActiveKey={['1', '2']} />
       </ProForm>
     </>

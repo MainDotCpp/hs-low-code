@@ -1,12 +1,19 @@
-import { ProFormUploadDragger } from '@ant-design/pro-form';
+import {
+  ProFormUploadButton,
+  ProFormUploadDragger,
+} from '@ant-design/pro-form';
 import { ProFormUploadDraggerProps } from '@ant-design/pro-form/es/components/UploadDragger';
 import { UploadFile, UploadProps } from 'antd';
 import { v4 } from 'uuid';
 import React from 'react';
 
-const FileUpload = (props: ProFormUploadDraggerProps) => {
+const FileUpload = (props: ProFormUploadDraggerProps & { btn?: boolean }) => {
+  const Element = props.btn ? ProFormUploadButton : ProFormUploadDragger;
   return (
-    <ProFormUploadDragger
+    <Element
+      filedConfig={{
+        name: 'files',
+      }}
       action={'/api/file'}
       max={10}
       fieldProps={{
@@ -60,7 +67,7 @@ const FileUpload = (props: ProFormUploadDraggerProps) => {
           return { [props.name || '']: fileUrl.at(0) || '' };
         }
         return { [props.name || '']: fileUrl };
-      }}></ProFormUploadDragger>
+      }}></Element>
   );
 };
 

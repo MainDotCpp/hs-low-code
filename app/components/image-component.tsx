@@ -10,8 +10,9 @@ import styles from './image-component.module.scss';
 import FileUpload from '@/app/components/file-upload';
 import { Col, Grid, Row } from 'antd';
 import useFormInstance = ProForm.useFormInstance;
+import { clickLink } from '@/app/action/page-action';
 
-const Component = ({ mode, ...props }: any) => {
+const Component = ({ pageId, mode, ...props }: any) => {
   return (
     <>
       {mode === 'edit' && props.link && (
@@ -34,6 +35,7 @@ const Component = ({ mode, ...props }: any) => {
           if (mode === 'edit') {
             return;
           }
+          clickLink(pageId).then();
           window.open(props.link);
         }}
       />

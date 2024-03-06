@@ -5,12 +5,22 @@ import { ComponentType, RootComponentType } from '@/app/components/components';
 import { Droppable } from 'react-beautiful-dnd';
 import Component from '@/app/components/component';
 import 'animate.css';
-const engine = (data: RootComponentType, mode: 'edit' | 'show') => {
+const engine = (
+  pageId: string,
+  data: RootComponentType,
+  mode: 'edit' | 'show',
+) => {
   return (
     <>
       {data.children.map((item: ComponentType<any>, index) => {
         return (
-          <Component key={item.id} index={index} props={item} mode={mode} />
+          <Component
+            pageId={pageId}
+            key={item.id}
+            index={index}
+            props={item}
+            mode={mode}
+          />
         );
       })}
     </>
@@ -19,9 +29,11 @@ const engine = (data: RootComponentType, mode: 'edit' | 'show') => {
 const Render = ({
   data,
   mode = 'show',
+  params,
 }: {
   data: any;
   mode?: 'show' | 'edit';
+  params: any;
 }) => {
   return (
     <Droppable droppableId={'root'}>
@@ -29,10 +41,11 @@ const Render = ({
         return (
           <>
             <div
+              style={data.style}
               ref={provided.innerRef}
               {...provided.droppableProps}
               className={`${styles.app} ${snapshot.isDraggingOver && styles.isOver}`}>
-              {engine(data, mode)}
+              {engine(params?.pageId, data, mode)}
               {provided.placeholder}
             </div>
           </>

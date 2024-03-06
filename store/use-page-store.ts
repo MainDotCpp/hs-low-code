@@ -12,6 +12,7 @@ export const usePageStore = create<{
   updateComponent: (componentId: string, value: any) => void;
   sortComponent: (sourceIndex: number, targetIndex: number) => void;
   setCurrentComponentId: (id: string) => void;
+  updateRoot: (value: any) => void;
 }>((set, get) => ({
   currentComponentId: undefined,
   page: undefined,
@@ -41,11 +42,17 @@ export const usePageStore = create<{
         const component = state.page.children.find(
           (item: any) => item.id === componentId,
         );
-        _.assign(component, {
-          ...value,
-          style: _.merge(component.style, value.style),
-        });
+        _.merge(component, value);
+        component.images = value.images;
         console.log(`[更新组件] `, JSON.stringify(component, null, 2));
+        return state;
+      }),
+    );
+  },
+  updateRoot: (value: any) => {
+    set(
+      produce((state) => {
+        _.merge(state.page, value);
         return state;
       }),
     );

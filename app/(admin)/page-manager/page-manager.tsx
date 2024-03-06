@@ -4,9 +4,8 @@ import Link from 'next/link';
 import PageUpdateModal from '@/app/(admin)/page-manager/page-update-modal';
 import { Button, message } from 'antd';
 import { useRef } from 'react';
-import { getPages } from '@/app/(admin)/page-manager/page';
 import { useRouter } from 'next/navigation';
-import { copyPage } from '@/app/action/page-action';
+import { copyPage, getPages } from '@/app/action/page-action';
 import LinkCopy from '@/app/(admin)/components/link-copy';
 
 const PageManager = () => {
@@ -57,27 +56,35 @@ const PageManager = () => {
                 );
               },
             },
-            { dataIndex: 'ban_count', title: '阻止进入', hideInSearch: true },
+            {
+              dataIndex: 'ban_count',
+              title: '阻止进入',
+              width: 80,
+              hideInSearch: true,
+            },
             {
               dataIndex: 'access_count',
+              width: 80,
               title: '访问数量',
               hideInSearch: true,
             },
             {
               dataIndex: 'click_link_count',
+              width: 100,
               title: '点击链接数量',
               hideInSearch: true,
             },
-            { dataIndex: 'status', title: '状态', hideInSearch: true },
-            { dataIndex: 'create_at', title: '创建时间', hideInSearch: true },
             {
-              width: 300,
+              width: 400,
               title: '操作',
               fixed: 'right',
               valueType: 'option',
               render: (_, record) => {
                 return (
                   <>
+                    <PageUpdateModal id={record.id} onSuccess={onUpdatePage}>
+                      <Button type='link'>编辑</Button>
+                    </PageUpdateModal>
                     <Link href={`/design/${record.id}`}>
                       <Button type='link'>设计</Button>
                     </Link>

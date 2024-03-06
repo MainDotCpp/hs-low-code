@@ -12,6 +12,8 @@ import { Button, message } from 'antd';
 import { useRequest } from 'ahooks';
 import { getPage, updatePageDocument } from '@/app/action/page-action';
 import { useRouter } from 'next/navigation';
+import { ProForm, ProFormColorPicker } from '@ant-design/pro-components';
+import { Color } from 'antd/es/color-picker';
 
 const Page = ({ params }: { params: { pageId: string } }) => {
   const setPage = usePageStore((state) => state.setPage);
@@ -23,6 +25,7 @@ const Page = ({ params }: { params: { pageId: string } }) => {
   const page = usePageStore((state) => state.page);
   const appendComponent = usePageStore((state) => state.appendComponent);
   const sortComponent = usePageStore((state) => state.sortComponent);
+  const updateRoot = usePageStore((state) => state.updateRoot);
 
   const router = useRouter();
 
@@ -40,11 +43,11 @@ const Page = ({ params }: { params: { pageId: string } }) => {
           result.source.droppableId === 'lib' &&
           result.destination?.droppableId === 'root'
         ) {
-          const initValue = JSON.parse(
-            // @ts-ignore
-            JSON.stringify(COMPONENT_MAPPING[result.draggableId].initValue),
-          );
+          // @ts-ignore
+          let schema = COMPONENT_MAPPING[result.draggableId];
+          const initValue = JSON.parse(JSON.stringify(schema.initValue));
           initValue.id = uuid();
+          schema.convert && schema.convert(initValue);
           appendComponent(initValue, result.destination.index);
         }
 
@@ -70,6 +73,20 @@ const Page = ({ params }: { params: { pageId: string } }) => {
                 返回
               </Button>
             </div>
+          </div>
+          <div>
+            <ProForm
+              layout='inline'
+              initialValues={page}
+              submitter={false}
+              onValuesChange={updateRoot}>
+              <ProFormColorPicker
+                transform={(value: Color) => {
+                  return { style: { backgroundColor: `#${value.toHex()}` } };
+                }}
+                name={['style', 'backgroundColor']}
+                label='页面背景色'></ProFormColorPicker>
+            </ProForm>
           </div>
           <div className={styles.action}>
             <Button type='primary' onClick={onSavePage}>
@@ -104,7 +121,8 @@ const Page = ({ params }: { params: { pageId: string } }) => {
                       mode={'edit'}
                       key={key}
                       index={index}
-                      props={schema.initValue}></Component>
+                      props={schema.initValue}
+                      pageId={''}></Component>
                   );
                 })}
                 {provided.placeholder}
