@@ -9,7 +9,7 @@ const LinkCopy = ({ id, name }: { id: string; name?: string | null }) => {
     async () => {
       let domainList = await getDomainList();
       return domainList.map((domain) => ({
-        key: domain.id,
+        key: domain.domain,
         label: <div>{domain.domain}</div>,
       }));
     },
@@ -19,8 +19,7 @@ const LinkCopy = ({ id, name }: { id: string; name?: string | null }) => {
     },
   );
   const onClick: MenuProps['onClick'] = async ({ key }) => {
-    const item = items.find((item) => item.key === key);
-    let link = `http://${item?.label}/${id}`;
+    let link = `https://${key}/${id}`;
     await navigator.clipboard.writeText(link);
     message.success(`落地页链接[${link}]已复制到剪贴板`);
   };
