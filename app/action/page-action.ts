@@ -57,6 +57,9 @@ export const copyPage = async (id: string) => {
   });
   page.id = uuidv4();
   page.name = page.name + '-复制';
+  page.access_count = 0;
+  page.click_link_count = 0;
+  page.ban_count = 0;
   return mainDb.t_page.create({ data: page });
 };
 
