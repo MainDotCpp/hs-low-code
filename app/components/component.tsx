@@ -5,7 +5,7 @@ import { Draggable } from 'react-beautiful-dnd';
 import { COMPONENT_MAPPING } from '@/app/components/component-mapping';
 import { usePageStore } from '@/store/use-page-store';
 
-const Component = ({
+export default function Component({
   pageId,
   props,
   index = 0,
@@ -15,7 +15,7 @@ const Component = ({
   props?: any;
   index?: number;
   mode: 'edit' | 'show';
-}) => {
+}) {
   // @ts-ignore
   const schema = COMPONENT_MAPPING[props.type];
   let Node = schema.Component;
@@ -59,6 +59,4 @@ const Component = ({
       }}
     </Draggable>
   );
-};
-
-export default Component;
+}
