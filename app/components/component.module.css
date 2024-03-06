@@ -23,13 +23,13 @@
 }
 
 .activeComponent:after {
-    content: 'V';
+    content: '编辑';
     font-size: 12px;
     line-height: 20px;
     padding: 0 8px;
     position: absolute;
     color: white;
-    right: 0;
+    left: 0;
     top: 0;
     background-color:#9775fa99 ;
 }

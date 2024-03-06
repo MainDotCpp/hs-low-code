@@ -46,7 +46,11 @@ const Component = ({
               if (mode === 'edit' && props.id) setCurrentComponentId(props.id);
             }}
             className={` ${props.id && currentComponentId === props.id ? styles.activeComponent : ''}`}>
-            <Node className={`${props.animated}`} {...props} mode={mode} />
+            <Node
+              className={`${props.animated} ${props.animatedInfinite ? 'animate__infinite' : ''}`}
+              {...props}
+              mode={mode}
+            />
           </div>
         );
       }}

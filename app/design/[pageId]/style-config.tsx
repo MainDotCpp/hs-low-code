@@ -1,5 +1,7 @@
 import {
+  ProFormCheckbox,
   ProFormColorPicker,
+  ProFormGroup,
   ProFormItem,
   ProFormSelect,
   ProFormSlider,
@@ -9,7 +11,7 @@ import { Color } from 'antd/es/color-picker';
 
 const animatedMapping = [
   {
-    value: 'wow animate__animated animate__bounce        ',
+    value: 'wow animate__animated animate__bounce',
     label: '弹跳，反弹，弹起',
   },
   {
@@ -317,16 +319,28 @@ const StyleConfig = () => {
         name={['style', 'paddingBlock']}
         label='上下边距'
         min={0}
-        max={100}></ProFormSlider>
+        max={400}></ProFormSlider>
       <ProFormSlider
         min={0}
-        max={100}
+        max={400}
         name={['style', 'paddingInline']}
         label='左右边距'></ProFormSlider>
-      <ProFormSelect
-        label='进入动画'
-        name='animated'
-        options={animatedMapping}></ProFormSelect>
+      <ProFormSlider
+        name={['style', 'borderRadius']}
+        label='圆角'
+        min={0}
+        max={100}></ProFormSlider>
+      <ProFormGroup>
+        <ProFormSelect
+          colProps={{ span: 12 }}
+          label='动画'
+          name='animated'
+          options={animatedMapping}></ProFormSelect>
+        <ProFormCheckbox
+          colProps={{ span: 12 }}
+          name={'animatedInfinite'}
+          label='循环'></ProFormCheckbox>
+      </ProFormGroup>
     </>
   );
 };

@@ -41,7 +41,10 @@ export const usePageStore = create<{
         const component = state.page.children.find(
           (item: any) => item.id === componentId,
         );
-        _.merge(component, value);
+        _.assign(component, {
+          ...value,
+          style: _.merge(component.style, value.style),
+        });
         console.log(`[更新组件] `, JSON.stringify(component, null, 2));
         return state;
       }),

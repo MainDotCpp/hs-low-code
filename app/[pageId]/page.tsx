@@ -5,11 +5,15 @@ import { getPage } from '@/app/action/page-action';
 import Preview from '@/app/[pageId]/preview';
 import { Empty } from 'antd';
 
-export default async function Home(params: any) {
+export default async function Home({ params }: any) {
   const page = await getPage(params.pageId);
+  if (!page) return <Empty />;
   return (
-    <main className={styles.main}>
-      {page ? <Preview data={page.content as any}></Preview> : <Empty />}
-    </main>
+    <>
+      <title>{page.title}</title>
+      <main className={styles.main}>
+        {page ? <Preview data={page.content as any}></Preview> : <Empty />}
+      </main>
+    </>
   );
 }

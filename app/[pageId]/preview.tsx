@@ -2,6 +2,7 @@
 import { DragDropContext } from 'react-beautiful-dnd';
 import Render from '@/app/components/render';
 import { t_page } from '@prisma/client';
+// @ts-ignore
 import { WOW } from 'wowjs';
 import { useEffect } from 'react';
 

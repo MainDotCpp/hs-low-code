@@ -1,6 +1,6 @@
 'use client';
 import { usePageStore } from '@/store/use-page-store';
-import { ProForm, ProFormText } from '@ant-design/pro-components';
+import { ProForm, ProFormGroup, ProFormText } from '@ant-design/pro-components';
 import { COMPONENT_MAPPING } from '@/app/components/component-mapping';
 import { Collapse, Empty, Typography } from 'antd';
 import styles from './page.module.scss';

@@ -16,13 +16,14 @@ model t_domain {
 }
 
 model t_page {
-  id                String    @id @db.Uuid
+  id                String    @id @db.Uuid @default(uuid())
+  name              String    @db.VarChar(32)
   title             String?   @db.VarChar(32)
   create_at         DateTime? @default(now()) @db.Timestamp(6)
   ban_redirect_link String?   @db.VarChar(255)
   ban_count         Int       @default(0)
   access_count      Int       @default(0)
-  content           Json?     @default("[]") @db.Json
+  content           Json?     @default("{\"children\":[]}") @db.Json
   status            Int       @default(0)
   click_link_count  Int       @default(0)
 }
