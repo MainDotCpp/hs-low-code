@@ -5,7 +5,7 @@ import PageUpdateModal from '@/app/(admin)/page-manager/page-update-modal';
 import { Button, message } from 'antd';
 import { useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { copyPage, getPages } from '@/app/action/page-action';
+import { copyPage, getPages, saveOrUpdatePage } from '@/app/action/page-action';
 import LinkCopy from '@/app/(admin)/components/link-copy';
 
 const PageManager = () => {
@@ -104,7 +104,13 @@ const PageManager = () => {
                       }}>
                       预览
                     </Button>
-                    <Button type='link' danger>
+                    <Button
+                      type='link'
+                      danger
+                      onClick={async () => {
+                        await saveOrUpdatePage({ id: record.id, status: 0 });
+                        tableRef.current?.reload();
+                      }}>
                       删除
                     </Button>
                   </>

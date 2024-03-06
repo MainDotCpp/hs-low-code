@@ -43,7 +43,11 @@ export const saveOrUpdatePage = async (page: t_page) => {
 
 export const getPages = async () => {
   'use server';
-  return mainDb.t_page.findMany();
+  return mainDb.t_page.findMany({
+    where: {
+      status: 1,
+    },
+  });
 };
 
 export const copyPage = async (id: string) => {

@@ -25,7 +25,7 @@ model t_page {
   ban_count         Int       @default(0)
   access_count      Int       @default(0)
   content           Json?     @default("{\"children\":[]}") @db.Json
-  status            Int       @default(0)
+  status            Int       @default(1)
   click_link_count  Int       @default(0)
 }
 
