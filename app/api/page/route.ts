@@ -9,6 +9,12 @@ export async function GET(req: NextRequest) {
       id: pageId,
     },
   });
+  if (!page) {
+    return NextResponse.json({
+      success: false,
+      message: '页面不存在',
+    });
+  }
   return NextResponse.json({
     success: true,
     data: page,

@@ -33,7 +33,7 @@ export const check = async (request: NextRequest) => {
     success: boolean;
     data: t_page | null;
   };
-  if (pageObj?.success !== true) {
+  if (pageObj?.success !== true || !pageObj.data) {
     console.error('获取页面数据失败 pageId:', pageId);
     return NextResponse.next();
   }
