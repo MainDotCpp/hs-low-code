@@ -42,6 +42,7 @@ export const check = async (request: NextRequest) => {
   );
   // 不使用斗蓬, 直接返回落地页
   if (pageObj?.data?.use_cloak === false) return NextResponse.next();
+  console.log(request.headers);
 
   // 调用斗蓬接口
   const realIp = getRealIp(request.headers);
@@ -51,15 +52,16 @@ export const check = async (request: NextRequest) => {
   formData.set('user_agent', ua.ua);
   formData.set('referer', request.headers.get('HTTP_REFERER') || '');
   formData.set('query', request.headers.get('QUERY_STRING') || '');
-  formData.set('lang', request.headers.get('HTTP_ACCEPT_LANGUAGE') || '');
+  formData.set('lang', request.headers.get('ACCEPT_LANGUAGE') || '');
   formData.set('ip_address', realIp);
+  console.log('[调用cloak] formData:', formData);
   try {
     const res = await fetch(URL, {
       method: 'POST',
       body: formData,
     });
     const resObj = await res.json();
-    console.log(resObj);
+    console.log('[调用cloak报文]', resObj);
     if (resObj['filter_page'] === 'white') {
       // 跳转到白页
       return NextResponse.rewrite(pageObj.data?.white_url || '');
