@@ -1,34 +1,33 @@
 // @ts-nocheck
-import { Dropdown, MenuProps, message, Space, Spin } from 'antd';
+import { Dropdown, MenuProps, message, Space } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
-import { getDomainList } from '@/app/action/domain-action';
-import { useRequest } from 'ahooks';
+import { t_domain } from 'prisma-client-1ce96e0fbe8c36aa31310b3a0d88982f3bbd2006586d0d486aea13ce697493d1';
 
-const LinkCopy = ({ id, name }: { id: string; name?: string | null }) => {
-  const { data: items, loading } = useRequest(
-    async () => {
-      let domainList = await getDomainList();
-      return domainList.map((domain) => ({
-        key: domain.domain,
-        label: <div>{domain.domain}</div>,
-      }));
-    },
-    {
-      cacheKey: 'domainList',
-      cacheTime: 1000 * 60 * 60 * 24,
-    },
-  );
+const LinkCopy = ({
+  id,
+  name,
+  domainList,
+}: {
+  id: string;
+  name?: string | null;
+  domainList?: t_domain[];
+}) => {
   const onClick: MenuProps['onClick'] = async ({ key }) => {
     let link = `https://${key}/${id}`;
     await navigator.clipboard.writeText(link);
     message.success(`落地页链接[${link}]已复制到剪贴板`);
   };
-  if (loading) {
-    return <Spin />;
-  }
 
   return (
-    <Dropdown menu={{ items: items || [], onClick }}>
+    <Dropdown
+      menu={{
+        items:
+          domainList?.map((domain) => ({
+            key: domain.domain,
+            label: domain.domain,
+          })) || [],
+        onClick,
+      }}>
       <a onClick={(e) => e.preventDefault()}>
         <Space>
           {name || '未设置标题'}

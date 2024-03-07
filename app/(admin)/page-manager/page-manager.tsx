@@ -7,10 +7,13 @@ import { useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { copyPage, getPages, saveOrUpdatePage } from '@/app/action/page-action';
 import LinkCopy from '@/app/(admin)/components/link-copy';
+import { useRequest } from 'ahooks';
+import { getDomainList } from '@/app/action/domain-action';
 
 const PageManager = () => {
   const tableRef = useRef<ActionType>();
   const router = useRouter();
+  const { data: domainList } = useRequest(getDomainList);
   const onUpdatePage = () => {
     tableRef.current?.reload();
   };
@@ -51,7 +54,11 @@ const PageManager = () => {
               render: (_text, record) => {
                 return (
                   <>
-                    <LinkCopy id={record.id} name={record.title} />
+                    <LinkCopy
+                      domainList={domainList}
+                      name={record.title}
+                      id={record.id}
+                    />
                   </>
                 );
               },
