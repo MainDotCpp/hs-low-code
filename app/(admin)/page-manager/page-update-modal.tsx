@@ -1,7 +1,11 @@
 import { ModalForm, ProFormSwitch } from '@ant-design/pro-form';
 import React from 'react';
 import { t_page } from '@prisma/client';
-import { ProFormText, ProFormTextArea } from '@ant-design/pro-components';
+import {
+  ProFormList,
+  ProFormText,
+  ProFormTextArea,
+} from '@ant-design/pro-components';
 import { getPage, saveOrUpdatePage } from '@/app/action/page-action';
 import { message } from 'antd';
 
@@ -33,7 +37,15 @@ const PageUpdateModal = ({
       <ProFormText name='id' label='ID' hidden></ProFormText>
       <ProFormText name='name' label='落地页名称'></ProFormText>
       <ProFormText name='title' label='页面标题'></ProFormText>
-      <ProFormTextArea name='script' label='代码'></ProFormTextArea>
+      <ProFormList
+        name='script_links'
+        label='额外JS脚本'
+        creatorButtonProps={{
+          creatorButtonText: '添加一个脚本链接',
+        }}>
+        <ProFormText name='link' width='lg'></ProFormText>
+      </ProFormList>
+      <ProFormTextArea name='extra_script' label='额外JS代码'></ProFormTextArea>
     </ModalForm>
   );
 };

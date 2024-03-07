@@ -5,6 +5,7 @@ import { ComponentType, RootComponentType } from '@/app/components/components';
 import { Droppable } from 'react-beautiful-dnd';
 import Component from '@/app/components/component';
 import 'animate.css';
+import Script from 'next/script';
 const engine = (
   pageId: string,
   data: RootComponentType,
@@ -36,22 +37,28 @@ const Render = ({
   params: any;
 }) => {
   return (
-    <Droppable droppableId={'root'}>
-      {(provided, snapshot) => {
-        return (
-          <>
-            <div
-              style={data.style}
-              ref={provided.innerRef}
-              {...provided.droppableProps}
-              className={`${styles.app} ${snapshot.isDraggingOver && styles.isOver}`}>
-              {engine(params?.pageId, data, mode)}
-              {provided.placeholder}
-            </div>
-          </>
-        );
-      }}
-    </Droppable>
+    <>
+      <Script src='https://cdn.bootcdn.net/ajax/libs/wow/1.1.2/wow.min.js'></Script>
+      <Script id='wow' strategy='worker'>
+        new WOW().init();
+      </Script>
+      <Droppable droppableId={'root'}>
+        {(provided, snapshot) => {
+          return (
+            <>
+              <div
+                style={data.style}
+                ref={provided.innerRef}
+                {...provided.droppableProps}
+                className={`${styles.app} ${snapshot.isDraggingOver && styles.isOver}`}>
+                {engine(params?.pageId, data, mode)}
+                {provided.placeholder}
+              </div>
+            </>
+          );
+        }}
+      </Droppable>
+    </>
   );
 };
 

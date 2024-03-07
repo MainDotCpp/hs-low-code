@@ -1,13 +1,9 @@
 import React from 'react';
-import {
-  ProFormDigit,
-  ProFormItem,
-  ProFormText,
-} from '@ant-design/pro-components';
-import styles from './image-component.module.scss';
-import ReactQuill from 'react-quill';
+import { ProFormItem } from '@ant-design/pro-components';
 import 'react-quill/dist/quill.snow.css';
+import dynamic from 'next/dynamic';
 
+const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 const Component = ({ mode, html, ...props }: any) => {
   return (
     <>
