@@ -32,7 +32,7 @@ const Component = ({ pageId, mode, ...props }: any) => {
         }}
         alt=''
         onClick={() => {
-          if (mode === 'edit') {
+          if (mode === 'edit' || !props.link) {
             return;
           }
           clickLink(pageId).then();

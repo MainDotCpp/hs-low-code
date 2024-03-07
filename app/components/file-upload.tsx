@@ -17,9 +17,8 @@ const FileUpload = (
         name: 'files',
       }}
       action={'/api/file'}
-      max={10}
       fieldProps={{
-        multiple: true,
+        multiple: !(props.max === 1),
       }}
       {...props}
       convertValue={(value: (string | UploadFile)[] | string) => {

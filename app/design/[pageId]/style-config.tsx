@@ -6,8 +6,9 @@ import {
   ProFormItem,
   ProFormSelect,
   ProFormSlider,
+  ProFormText,
 } from '@ant-design/pro-components';
-import { Col, ColorPicker } from 'antd';
+import { Col, ColorPicker, Progress } from 'antd';
 import { Color } from 'antd/es/color-picker';
 
 const animatedMapping = [
@@ -316,7 +317,13 @@ const StyleConfig = () => {
           };
         }}
         name={['style', 'backgroundColor']}></ProFormColorPicker>
-      <ProForm.Group grid>
+      <ProFormGroup grid>
+        <Col span={12}>
+          <ProFormText name={['style', 'width']} label='宽度'></ProFormText>
+        </Col>
+        <Col span={12}>
+          <ProFormText name={['style', 'height']} label='高度'></ProFormText>
+        </Col>
         <Col span={12}>
           <ProFormSlider
             name={['style', 'paddingBlock']}
@@ -333,8 +340,6 @@ const StyleConfig = () => {
             name={['style', 'paddingInline']}
             label='左右内边距'></ProFormSlider>
         </Col>
-      </ProForm.Group>
-      <ProForm.Group grid>
         <Col span={12}>
           <ProFormSlider
             name={['style', 'marginBlock']}
@@ -351,7 +356,7 @@ const StyleConfig = () => {
             name={['style', 'marginInline']}
             label='左右外边距'></ProFormSlider>
         </Col>
-      </ProForm.Group>
+      </ProFormGroup>
       <ProFormSlider
         name={['style', 'borderRadius']}
         label='圆角'

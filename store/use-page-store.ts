@@ -43,7 +43,7 @@ export const usePageStore = create<{
           (item: any) => item.id === componentId,
         );
         _.merge(component, value);
-        component.images = value.images;
+        value.images && (component.images = value.images);
         console.log(`[更新组件] `, JSON.stringify(component, null, 2));
         return state;
       }),
@@ -60,6 +60,6 @@ export const usePageStore = create<{
   setCurrentComponentId: (id: string) =>
     set({
       currentComponentId: id,
-      currentComponent: get().page.children.find((item) => item.id === id),
+      currentComponent: get().page?.children.find((item) => item.id === id),
     }),
 }));

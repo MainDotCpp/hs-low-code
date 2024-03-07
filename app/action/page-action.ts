@@ -27,7 +27,7 @@ export const updatePageDocument = async (pageId: string, schema: any) => {
   });
 };
 
-export const saveOrUpdatePage = async (page: t_page) => {
+export const saveOrUpdatePage = async (page: Partial<t_page>) => {
   'use server';
   if (!page.id) {
     page.id = uuidv4();

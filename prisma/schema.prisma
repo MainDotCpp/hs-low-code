@@ -20,6 +20,9 @@ model t_page {
   name              String    @db.VarChar(32)
   title             String?   @db.VarChar(32)
   script            String?   @db.Text
+  use_cloak         Boolean   @default(false)
+  cloak_label       String?   @db.VarChar(32)
+  white_url         String?   @db.Text
   create_at         DateTime? @default(now()) @db.Timestamp(6)
   script_links      Json?     @default("[]") @db.Json
   extra_script      String?   @db.Text

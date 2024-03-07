@@ -1,4 +1,8 @@
-import { ModalForm, ProFormSwitch } from '@ant-design/pro-form';
+import {
+  ModalForm,
+  ProFormDependency,
+  ProFormSwitch,
+} from '@ant-design/pro-form';
 import React from 'react';
 import { t_page } from '@prisma/client';
 import {
@@ -29,6 +33,7 @@ const PageUpdateModal = ({
   };
   return (
     <ModalForm<t_page>
+      title='落地页配置'
       // @ts-ignore
       request={getInitialValues}
       initialValues={{}}
@@ -38,6 +43,28 @@ const PageUpdateModal = ({
       <ProFormText name='name' label='落地页名称'></ProFormText>
       <ProFormText name='title' label='页面标题'></ProFormText>
 
+      <ProFormSwitch name='use_cloak' label='使用斗蓬'></ProFormSwitch>
+      <ProFormDependency name={['use_cloak']}>
+        {({ use_cloak }) => {
+          return use_cloak ? (
+            <>
+              <ProFormText
+                name='cloak_label'
+                label='斗蓬Flow标签'
+                rules={[{ required: true }]}
+                extra={
+                  <a href='https://baidu.com' target='_blank'>
+                    斗蓬服务地址
+                  </a>
+                }></ProFormText>
+              <ProFormText
+                name='white_url'
+                rules={[{ type: 'url', required: true }]}
+                label='拦截后跳转路径'></ProFormText>
+            </>
+          ) : null;
+        }}
+      </ProFormDependency>
       <ProFormList
         name='script_links'
         label='额外JS脚本'
