@@ -54,7 +54,7 @@ const PageUpdateModal = ({
                 rules={[{ required: true }]}
                 extra={
                   <a
-                    href='https://cloaking.house/webmaster/streamsm'
+                    href='https://cloaking.house/webmaster/streams'
                     target='_blank'>
                     斗蓬服务地址
                   </a>
