@@ -53,7 +53,9 @@ const PageUpdateModal = ({
                 label='斗蓬Flow标签'
                 rules={[{ required: true }]}
                 extra={
-                  <a href='https://baidu.com' target='_blank'>
+                  <a
+                    href='https://cloaking.house/webmaster/streamsm'
+                    target='_blank'>
                     斗蓬服务地址
                   </a>
                 }></ProFormText>
