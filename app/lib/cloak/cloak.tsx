@@ -50,9 +50,9 @@ export const check = async (request: NextRequest) => {
   const formData = new FormData();
   formData.set('label', pageObj.data?.cloak_label || '');
   formData.set('user_agent', ua.ua);
-  formData.set('referer', request.headers.get('HTTP_REFERER') || '');
-  formData.set('query', request.headers.get('QUERY_STRING') || '');
-  formData.set('lang', request.headers.get('ACCEPT_LANGUAGE') || '');
+  formData.set('referer', request.headers.get('http-referer') || '');
+  formData.set('query', request.headers.get('query-string') || '');
+  formData.set('lang', request.headers.get('accept-language') || '');
   formData.set('ip_address', realIp);
   console.log('[调用cloak] formData:', formData);
   try {
