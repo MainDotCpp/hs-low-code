@@ -37,6 +37,7 @@ const PageUpdateModal = ({
       <ProFormText name='id' label='ID' hidden></ProFormText>
       <ProFormText name='name' label='落地页名称'></ProFormText>
       <ProFormText name='title' label='页面标题'></ProFormText>
+
       <ProFormList
         name='script_links'
         label='额外JS脚本'
