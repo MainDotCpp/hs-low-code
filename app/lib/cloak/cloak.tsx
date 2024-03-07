@@ -63,6 +63,9 @@ export const check = async (request: NextRequest) => {
     const resObj = await res.json();
     console.log('[调用cloak报文]', resObj);
     if (resObj['filter_page'] === 'white') {
+      const offerRes = await fetch(
+        `http://localhost:3000/api/page/offer-page?pageId=${pageId}`,
+      );
       // 跳转到白页
       return NextResponse.rewrite(pageObj.data?.white_url || '');
     }
