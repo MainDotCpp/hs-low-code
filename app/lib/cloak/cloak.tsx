@@ -37,6 +37,9 @@ export const check = async (request: NextRequest) => {
     console.error('获取页面数据失败 pageId:', pageId);
     return NextResponse.next();
   }
+  console.log(
+    `[cloak] 页面数据: ${pageObj.data?.use_cloak}|${pageObj.data?.cloak_label}|${pageObj.data?.white_url}`,
+  );
   // 不使用斗蓬, 直接返回落地页
   if (pageObj?.data?.use_cloak === false) return NextResponse.next();
 
