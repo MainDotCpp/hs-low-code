@@ -5,14 +5,14 @@ import { t_page } from '@prisma/client';
 const URL = 'https://cloakit.house/api/v1/check';
 
 const ipHeaders = [
-  'HTTP_CLIENT_IP',
-  'HTTP_X_FORWARDED_FOR',
-  'HTTP_CF_CONNECTING_IP',
-  'HTTP_FORWARDED_FOR',
-  'HTTP_X_COMING_FROM',
-  'HTTP_COMING_FROM',
-  'HTTP_FORWARDED_FOR_IP',
-  'HTTP_X_REAL_IP',
+  'client_ip',
+  'x-forwarded-for',
+  'forwarded-for',
+  'cf-connecting-ip',
+  'x-coming-from',
+  'coming-from',
+  'forwarded-for-ip',
+  'x-real-ip',
 ];
 const getRealIp = (header: NextRequest['headers']) => {
   for (const ipHeader of ipHeaders) {
@@ -20,7 +20,7 @@ const getRealIp = (header: NextRequest['headers']) => {
       return header.get(ipHeader) as string;
     }
   }
-  return header.get('REMOTE_ADDRESS') || '127.0.0.1';
+  return header.get('remote-host') || '127.0.0.1';
 };
 
 export const check = async (request: NextRequest) => {
