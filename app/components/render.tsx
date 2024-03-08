@@ -5,7 +5,6 @@ import { ComponentType, RootComponentType } from '@/app/components/components';
 import { Droppable } from 'react-beautiful-dnd';
 import Component from '@/app/components/component';
 import 'animate.css';
-import { WOW } from 'wowjs';
 import Script from 'next/script';
 const engine = (
   pageId: string,
