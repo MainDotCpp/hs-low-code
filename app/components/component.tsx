@@ -8,7 +8,7 @@ import { usePageStore } from '@/store/use-page-store';
 
 export default function Component({
   pageId,
-  props,
+  props: { animatedInfinite, ...props },
   index = 0,
   mode,
 }: {
@@ -34,7 +34,7 @@ export default function Component({
   );
   const el = (
     <Node
-      className={`${props.animated} ${props.animatedInfinite ? 'animate__infinite' : ''}`}
+      className={`${props.animated} ${animatedInfinite ? 'animate__infinite' : ''}`}
       pageId={pageId}
       {...props}
       mode={mode}

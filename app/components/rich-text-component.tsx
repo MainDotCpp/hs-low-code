@@ -4,7 +4,7 @@ import 'react-quill/dist/quill.snow.css';
 import dynamic from 'next/dynamic';
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
-const Component = ({ mode, html, ...props }: any) => {
+const Component = ({ mode, html, pageId, ...props }: any) => {
   return (
     <>
       <div dangerouslySetInnerHTML={{ __html: html }} {...props}></div>

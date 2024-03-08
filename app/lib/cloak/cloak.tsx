@@ -40,40 +40,61 @@ export const check = async (request: NextRequest) => {
   console.log(
     `[cloak] 页面数据: ${pageObj.data?.use_cloak}|${pageObj.data?.cloak_label}|${pageObj.data?.white_url}`,
   );
-  // 不使用斗蓬, 直接返回落地页
-  if (pageObj?.data?.use_cloak === false) return NextResponse.next();
   console.log(request.headers);
-
-  // 调用斗蓬接口
   const realIp = getRealIp(request.headers);
   const ua = userAgent(request);
-  const formData = new FormData();
-  formData.set('label', pageObj.data?.cloak_label || '');
-  formData.set('user_agent', ua.ua);
-  formData.set('referer', request.headers.get('http-referer') || '');
-  formData.set('query', request.headers.get('query-string') || '');
-  formData.set('lang', request.headers.get('accept-language') || '');
-  formData.set('ip_address', realIp);
-  console.log('[调用cloak] formData:', formData);
-  try {
-    const res = await fetch(URL, {
-      method: 'POST',
-      body: formData,
-    });
-    const resObj = await res.json();
-    console.log('[调用cloak报文]', resObj);
-    if (resObj['filter_page'] === 'white') {
-      const offerRes = await fetch(
-        `http://localhost:3000/api/page/offer-page?pageId=${pageId}`,
-      );
-      // 跳转到白页
-      return NextResponse.rewrite(pageObj.data?.white_url || '');
+  const visitDto = {
+    pageId: pageId,
+    useCloak: pageObj.data?.use_cloak,
+    cloakLabel: pageObj.data?.cloak_label,
+    whiteUrl: pageObj.data?.white_url,
+    ipAddress: realIp,
+    userAgent: ua.ua,
+    referer: request.headers.get('http-referer') || '',
+    query: request.headers.get('query-string') || '',
+    lang: request.headers.get('accept-language') || '',
+    filterType: 'offer',
+  };
+
+  // 不使用斗蓬, 直接返回落地页
+  if (pageObj?.data?.use_cloak === true) {
+    // 调用斗蓬接口
+    const formData = new FormData();
+    formData.set('label', visitDto.cloakLabel || '');
+    formData.set('user_agent', visitDto.userAgent);
+    formData.set('referer', visitDto.referer);
+    formData.set('query', visitDto.query);
+    formData.set('lang', visitDto.lang);
+    formData.set('ip_address', visitDto.ipAddress);
+    console.log('[调用cloak] formData:', formData);
+    try {
+      const res = await fetch(URL, {
+        method: 'POST',
+        body: formData,
+      });
+      const resObj = await res.json();
+      console.log('[调用cloak报文]', resObj);
+      visitDto['filterType'] = resObj['filter_page'];
+    } catch (e) {
+      console.log(e);
     }
-    if (resObj['filter_page'] === 'offer') {
-      // 跳转到黑页
-      return NextResponse.next();
-    }
-  } catch (e) {
-    console.log(e);
+  }
+  fetch('http://localhost:3000/api/page/visit', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(visitDto),
+  }).then();
+  if (visitDto.filterType === 'white') {
+    const offerRes = await fetch(
+      `http://localhost:3000/api/page/offer-page?pageId=${pageId}`,
+    );
+    // 跳转到白页
+    return NextResponse.rewrite(visitDto.whiteUrl || '');
+  }
+  if (visitDto.filterType === 'offer') {
+    // 跳转到黑页
+    return NextResponse.next();
   }
 };

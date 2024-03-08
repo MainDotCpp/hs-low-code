@@ -39,15 +39,21 @@ model t_page {
 }
 
 model t_visit_log {
-  id                 Int      @id @default(autoincrement())
-  ip                 String   @db.VarChar(32)
-  cloak_label        String?  @db.VarChar(64)
-  use_cloak          Boolean  @default(false)
-  filter_type        String   @db.VarChar(32)
-  filter_reason      String   @db.VarChar(32)
-  user_agent         String?
-  language           String?
-  host               String?
-  create_at          DateTime @default(now())
-  sec_ch_ua_platform String?
+  id         Int        @id @default(autoincrement())
+  pageId     String     @map("page_id") @db.Uuid
+  useCloak   Boolean    @map("use_cloak")
+  cloakLabel String?    @map("cloak_label") @db.VarChar(48)
+  writeUrl   String?    @map("write_url") @db.VarChar(255)
+  ipAddress  String     @map("ip_address") @db.VarChar(32)
+  userAgent  String     @map("user_agent") @db.VarChar(255)
+  referer    String?    @db.VarChar(255)
+  query      String?    @db.VarChar(255)
+  lang       String?    @db.VarChar(64)
+  filterType FilterType @default(WHITE) @map("filter_type")
+  createAt   DateTime   @default(now()) @map("create_at") @db.Timestamp(6)
+}
+
+enum FilterType {
+  WHITE
+  OFFER
 }
