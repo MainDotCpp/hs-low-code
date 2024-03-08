@@ -17,8 +17,12 @@ model t_domain {
 
 model t_page {
   id                String    @id @default(uuid()) @db.Uuid
+  pid               Int       @default(autoincrement())
   name              String    @db.VarChar(32)
   title             String?   @db.VarChar(32)
+  description       String?   @db.Text
+  remark            String?   @db.VarChar(255)
+  tags              Json      @default("[]") @db.Json
   script            String?   @db.Text
   use_cloak         Boolean   @default(false)
   cloak_label       String?   @db.VarChar(32)
@@ -36,6 +40,11 @@ model t_page {
 
 model t_visit_log {
   id                 Int      @id @default(autoincrement())
+  ip                 String   @db.VarChar(32)
+  cloak_label        String?  @db.VarChar(64)
+  use_cloak          Boolean  @default(false)
+  filter_type        String   @db.VarChar(32)
+  filter_reason      String   @db.VarChar(32)
   user_agent         String?
   language           String?
   host               String?

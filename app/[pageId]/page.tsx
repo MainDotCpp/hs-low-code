@@ -4,6 +4,7 @@ import Preview from '@/app/[pageId]/preview';
 import { Empty } from 'antd';
 import Script from 'next/script';
 import { JsonArray } from '@prisma/client/runtime/binary';
+import { Mate } from 'next/dist/compiled/@next/font/dist/google';
 
 export default async function Home({ params }: any) {
   const page = await getPage(params.pageId);
@@ -12,6 +13,7 @@ export default async function Home({ params }: any) {
   return (
     <>
       <title>{page.title}</title>
+      <meta></meta>
       {(page.script_links as JsonArray | undefined)?.map((link: any) => (
         <Script
           key={link.link}

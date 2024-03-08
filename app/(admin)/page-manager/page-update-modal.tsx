@@ -7,11 +7,13 @@ import React from 'react';
 import { t_page } from '@prisma/client';
 import {
   ProFormList,
+  ProFormSelect,
   ProFormText,
   ProFormTextArea,
 } from '@ant-design/pro-components';
 import { getPage, saveOrUpdatePage } from '@/app/action/page-action';
 import { message } from 'antd';
+import logger from '@/app/lib/logger';
 
 const PageUpdateModal = ({
   id,
@@ -42,6 +44,9 @@ const PageUpdateModal = ({
       <ProFormText name='id' label='ID' hidden></ProFormText>
       <ProFormText name='name' label='落地页名称'></ProFormText>
       <ProFormText name='title' label='页面标题'></ProFormText>
+      <ProFormSelect mode='tags' name='tags' label='标签'></ProFormSelect>
+      <ProFormTextArea name='description' label='页面描述'></ProFormTextArea>
+      <ProFormTextArea name='remark' label='备注'></ProFormTextArea>
 
       <ProFormSwitch name='use_cloak' label='使用斗蓬'></ProFormSwitch>
       <ProFormDependency name={['use_cloak']}>

@@ -2,7 +2,7 @@
 import { ActionType, ProTable } from '@ant-design/pro-components';
 import Link from 'next/link';
 import PageUpdateModal from '@/app/(admin)/page-manager/page-update-modal';
-import { Button, message } from 'antd';
+import { Button, message, Tag } from 'antd';
 import { useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { copyPage, getPages, saveOrUpdatePage } from '@/app/action/page-action';
@@ -45,23 +45,37 @@ const PageManager = () => {
               title: '名称',
               width: 200,
               hideInSearch: true,
-            },
-            {
-              dataIndex: 'title',
-              title: '页面标题',
-              width: 200,
-              hideInSearch: true,
               render: (_text, record) => {
                 return (
                   <>
                     <LinkCopy
                       domainList={domainList}
-                      name={record.title}
+                      name={record.name}
                       id={record.id}
                     />
                   </>
                 );
               },
+            },
+            {
+              dataIndex: 'title',
+              title: '页面标题',
+              width: 200,
+              ellipsis: true,
+              hideInSearch: true,
+            },
+            {
+              title: '标签',
+              width: 150,
+              dataIndex: 'tags',
+              render: (_, record) =>
+                record.tags?.map((tag) => <Tag key={tag}>{tag}</Tag>),
+            },
+            {
+              title: '备注',
+              dataIndex: 'remark',
+              width: 200,
+              ellipsis: true,
             },
             {
               dataIndex: 'ban_count',

@@ -3,6 +3,7 @@
 import { mainDb } from '@/prisma/main-db';
 import { t_page } from '@prisma/client';
 import { v4 as uuidv4 } from 'uuid';
+import logger from '@/app/lib/logger';
 
 export const getPage = async (id: string) => {
   'use server';
@@ -29,6 +30,7 @@ export const updatePageDocument = async (pageId: string, schema: any) => {
 
 export const saveOrUpdatePage = async (page: Partial<t_page>) => {
   'use server';
+  logger.info('保存页面', page);
   if (!page.id) {
     page.id = uuidv4();
     page.status = 1;
@@ -48,6 +50,9 @@ export const getPages = async () => {
     where: {
       status: 1,
     },
+    orderBy: {
+      pid: 'desc',
+    },
   });
 };
 
@@ -60,6 +65,7 @@ export const copyPage = async (id: string) => {
   page.access_count = 0;
   page.click_link_count = 0;
   page.ban_count = 0;
+  page.pid = undefined;
   return mainDb.t_page.create({ data: page });
 };
 

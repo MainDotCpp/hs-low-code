@@ -29,10 +29,7 @@ const LinkCopy = ({
         onClick,
       }}>
       <a onClick={(e) => e.preventDefault()}>
-        <Space>
-          {name || '未设置标题'}
-          <DownOutlined />
-        </Space>
+        <Space>{name || '未设置标题'}</Space>
       </a>
     </Dropdown>
   );
