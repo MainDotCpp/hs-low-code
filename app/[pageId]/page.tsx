@@ -4,7 +4,6 @@ import Preview from '@/app/[pageId]/preview';
 import { Empty } from 'antd';
 import Script from 'next/script';
 import { JsonArray } from '@prisma/client/runtime/binary';
-import { Mate } from 'next/dist/compiled/@next/font/dist/google';
 
 export default async function Home({ params }: any) {
   const page = await getPage(params.pageId);

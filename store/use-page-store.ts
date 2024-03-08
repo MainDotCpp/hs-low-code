@@ -13,10 +13,22 @@ export const usePageStore = create<{
   sortComponent: (sourceIndex: number, targetIndex: number) => void;
   setCurrentComponentId: (id: string) => void;
   updateRoot: (value: any) => void;
+  removeComponent: (id: string) => void;
 }>((set, get) => ({
-  currentComponentId: undefined,
-  page: undefined,
+  currentComponentId: undefined, // 当前组件id
+  page: undefined, // 页面数据
+
+  /**
+   * 设置页面
+   * @param page
+   */
   setPage: (page: RootComponentType) => set({ page }),
+
+  /**
+   * 排序组件
+   * @param sourceIndex
+   * @param targetIndex
+   */
   sortComponent: (sourceIndex: number, targetIndex: number) => {
     set(
       produce((state) => {
@@ -27,6 +39,12 @@ export const usePageStore = create<{
       }),
     );
   },
+
+  /**
+   *  添加组件
+   * @param component
+   * @param index
+   */
   appendComponent: function (component: any, index): void {
     console.log(`[添加组件] `, component);
     set(
@@ -36,6 +54,12 @@ export const usePageStore = create<{
       }),
     );
   },
+
+  /**
+   * 更新组件
+   * @param componentId 组件id
+   * @param value 更新值
+   */
   updateComponent: (componentId: string, value: any) => {
     set(
       produce((state) => {
@@ -49,6 +73,11 @@ export const usePageStore = create<{
       }),
     );
   },
+
+  /**
+   * 更新根组件
+   * @param value
+   */
   updateRoot: (value: any) => {
     set(
       produce((state) => {
@@ -57,9 +86,30 @@ export const usePageStore = create<{
       }),
     );
   },
+  /**
+   * 设置当前组件
+   * @param id
+   */
   setCurrentComponentId: (id: string) =>
     set({
       currentComponentId: id,
       currentComponent: get().page?.children.find((item) => item.id === id),
     }),
+
+  /**
+   * 移除组件
+   * @param id
+   */
+  removeComponent: (id: string) => {
+    set(
+      produce((state) => {
+        state.page.children = state.page.children.filter(
+          (item: any) => item.id !== id,
+        );
+        state.currentComponentId = undefined;
+        state.currentComponent = undefined;
+        return state;
+      }),
+    );
+  },
 }));

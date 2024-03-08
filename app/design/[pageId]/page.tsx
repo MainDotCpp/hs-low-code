@@ -8,7 +8,7 @@ import { usePageStore } from '@/store/use-page-store';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { v4 as uuid } from 'uuid';
 import Config from '@/app/design/[pageId]/config';
-import { Button, message } from 'antd';
+import { Button, message, Spin } from 'antd';
 import { useRequest } from 'ahooks';
 import { getPage, updatePageDocument } from '@/app/action/page-action';
 import { useRouter } from 'next/navigation';
@@ -17,7 +17,7 @@ import { Color } from 'antd/es/color-picker';
 
 const Page = ({ params }: { params: { pageId: string } }) => {
   const setPage = usePageStore((state) => state.setPage);
-  useRequest(() => getPage(params.pageId), {
+  const { loading } = useRequest(() => getPage(params.pageId), {
     onSuccess: (data) => {
       setPage(data!!.content as any);
     },
@@ -131,7 +131,8 @@ const Page = ({ params }: { params: { pageId: string } }) => {
           </Droppable>
         </div>
         <div className={styles.main}>
-          {page && <Render data={page} mode='edit' />}
+          {loading && <Spin />}
+          {page && <Render data={page} mode='edit' params={{}} />}
         </div>
         <div className={styles.config}>
           <Config />

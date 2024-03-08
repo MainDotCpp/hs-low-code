@@ -69,7 +69,9 @@ const PageManager = () => {
               width: 150,
               dataIndex: 'tags',
               render: (_, record) =>
-                record.tags?.map((tag) => <Tag key={tag}>{tag}</Tag>),
+                (record.tags as string[])?.map((tag) => (
+                  <Tag key={tag}>{tag}</Tag>
+                )),
             },
             {
               title: '备注',
