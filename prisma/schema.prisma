@@ -17,43 +17,47 @@ model t_domain {
 
 model t_page {
   id                String    @id @default(uuid()) @db.Uuid
-  pid               Int       @default(autoincrement())
   name              String    @db.VarChar(32)
   title             String?   @db.VarChar(32)
-  description       String?   @db.Text
-  remark            String?   @db.VarChar(255)
-  tags              Json      @default("[]") @db.Json
-  script            String?   @db.Text
-  use_cloak         Boolean   @default(false)
-  cloak_label       String?   @db.VarChar(32)
-  white_url         String?   @db.Text
   create_at         DateTime? @default(now()) @db.Timestamp(6)
-  script_links      Json?     @default("[]") @db.Json
-  extra_script      String?   @db.Text
   ban_redirect_link String?   @db.VarChar(255)
   ban_count         Int       @default(0)
   access_count      Int       @default(0)
   content           Json?     @default("{\"children\":[]}") @db.Json
   status            Int       @default(1)
   click_link_count  Int       @default(0)
+  script            String?
+  extra_script      String?
+  script_links      Json?     @default("[]") @db.Json
+  cloak_label       String?   @db.VarChar(32)
+  use_cloak         Boolean   @default(false)
+  white_url         String?
+  description       String?
+  pid               Int       @default(autoincrement())
+  remark            String?   @db.VarChar(255)
+  tags              Json      @default("[]") @db.Json
 }
 
-model t_visit_log {
-  id         Int        @id @default(autoincrement())
-  pageId     String     @map("page_id") @db.Uuid
-  useCloak   Boolean    @map("use_cloak")
-  cloakLabel String?    @map("cloak_label") @db.VarChar(48)
-  writeUrl   String?    @map("write_url") @db.VarChar(255)
-  ipAddress  String     @map("ip_address") @db.VarChar(32)
-  userAgent  String     @map("user_agent") @db.VarChar(255)
-  referer    String?    @db.VarChar(255)
-  query      String?    @db.VarChar(255)
-  lang       String?    @db.VarChar(64)
-  filterType FilterType @default(WHITE) @map("filter_type")
-  createAt   DateTime   @default(now()) @map("create_at") @db.Timestamp(6)
+model VisitLog {
+  id         Int            @id @default(autoincrement())
+  userAgent  String         @map("user_agent") @db.VarChar(255)
+  createAt   DateTime?      @default(now()) @map("create_at") @db.Timestamp(6)
+  cloakLabel String?        @map("cloak_label") @db.VarChar(48)
+  filterPage FilterPageEnum @default(OFFER) @map("filter_page")
+  filterFlag Boolean        @default(false) @map("filter_flag")
+  filterType String         @map("filter_type") @db.VarChar(32)
+  useCloak   Boolean        @map("use_cloak")
+  ipAddress  String         @map("ip_address") @db.VarChar(32)
+  lang       String?        @db.VarChar(64)
+  pageId     String         @map("page_id") @db.Uuid
+  query      String?        @db.VarChar(255)
+  referer    String?        @db.VarChar(255)
+  whiteUrl   String?        @map("white_url") @db.VarChar(255)
+
+  @@map(name: "t_visit_log")
 }
 
-enum FilterType {
+enum FilterPageEnum {
   WHITE
   OFFER
 }

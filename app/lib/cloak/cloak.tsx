@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse, userAgent } from 'next/server';
 import { getPage } from '@/app/action/page-action';
-import { t_page } from '@prisma/client';
+import { t_page, VisitLog } from '@prisma/client';
+import { v4 } from 'uuid';
 
 const URL = 'https://cloakit.house/api/v1/check';
 
@@ -40,10 +41,9 @@ export const check = async (request: NextRequest) => {
   console.log(
     `[cloak] 页面数据: ${pageObj.data?.use_cloak}|${pageObj.data?.cloak_label}|${pageObj.data?.white_url}`,
   );
-  console.log(request.headers);
   const realIp = getRealIp(request.headers);
   const ua = userAgent(request);
-  const visitDto = {
+  const visitDto: Omit<VisitLog, 'id'> = {
     pageId: pageId,
     useCloak: pageObj.data?.use_cloak,
     cloakLabel: pageObj.data?.cloak_label,
@@ -53,7 +53,10 @@ export const check = async (request: NextRequest) => {
     referer: request.headers.get('http-referer') || '',
     query: request.headers.get('query-string') || '',
     lang: request.headers.get('accept-language') || '',
-    filterType: 'offer',
+    filterType: 'success',
+    filterFlag: false,
+    filterPage: 'OFFER',
+    createAt: new Date(),
   };
 
   // 不使用斗蓬, 直接返回落地页
@@ -62,9 +65,9 @@ export const check = async (request: NextRequest) => {
     const formData = new FormData();
     formData.set('label', visitDto.cloakLabel || '');
     formData.set('user_agent', visitDto.userAgent);
-    formData.set('referer', visitDto.referer);
-    formData.set('query', visitDto.query);
-    formData.set('lang', visitDto.lang);
+    formData.set('referer', visitDto.referer!!);
+    formData.set('query', visitDto.query!!);
+    formData.set('lang', visitDto.lang!!);
     formData.set('ip_address', visitDto.ipAddress);
     console.log('[调用cloak] formData:', formData);
     try {
@@ -74,7 +77,9 @@ export const check = async (request: NextRequest) => {
       });
       const resObj = await res.json();
       console.log('[调用cloak报文]', resObj);
-      visitDto['filterType'] = resObj['filter_page'];
+      visitDto.filterType = resObj['filter_type'];
+      visitDto.filterFlag = resObj['filter_flag'];
+      visitDto.filterPage = resObj['filter_page'].toUpperCase();
     } catch (e) {
       console.log(e);
     }
@@ -86,15 +91,14 @@ export const check = async (request: NextRequest) => {
     },
     body: JSON.stringify(visitDto),
   }).then();
-  if (visitDto.filterType === 'white') {
+
+  if (visitDto.filterPage === 'WHITE') {
     const offerRes = await fetch(
       `http://localhost:3000/api/page/offer-page?pageId=${pageId}`,
     );
     // 跳转到白页
     return NextResponse.rewrite(visitDto.whiteUrl || '');
   }
-  if (visitDto.filterType === 'offer') {
-    // 跳转到黑页
-    return NextResponse.next();
-  }
+  // 跳转到黑页
+  return NextResponse.next();
 };
