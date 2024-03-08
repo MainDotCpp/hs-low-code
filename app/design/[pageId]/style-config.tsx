@@ -10,6 +10,8 @@ import {
 } from '@ant-design/pro-components';
 import { Col, ColorPicker, Progress } from 'antd';
 import { Color } from 'antd/es/color-picker';
+import AnimateSelect from '@/app/components/animate-select';
+import { ProFormSwitch } from '@ant-design/pro-form';
 
 const animatedMapping = [
   {
@@ -362,17 +364,13 @@ const StyleConfig = () => {
         label='圆角'
         min={0}
         max={100}></ProFormSlider>
-      <ProFormGroup>
-        <ProFormSelect
-          colProps={{ span: 12 }}
-          label='动画'
-          name='animated'
-          options={animatedMapping}></ProFormSelect>
-        <ProFormCheckbox
-          colProps={{ span: 12 }}
-          name={'animatedInfinite'}
-          label='循环'></ProFormCheckbox>
-      </ProFormGroup>
+      <ProFormItem name='animated' wrapperCol={{ span: 12 }}>
+        <AnimateSelect></AnimateSelect>
+      </ProFormItem>
+      <ProFormSwitch
+        colProps={{ span: 12 }}
+        name={'animatedInfinite'}
+        label='循环动画'></ProFormSwitch>
     </>
   );
 };

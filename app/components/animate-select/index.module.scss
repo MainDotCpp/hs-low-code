@@ -1,0 +1,57 @@
+
+.animatedGroup {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  grid-auto-rows: 100px;
+  gap: 8px;
+}
+
+.animatedBox {
+  background-color: #00000010;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  scale: 1;
+  border-radius: 8px;
+  &:hover {
+    background-color: #00000020;
+    scale: 0.9;
+  }
+  transition: all 0.3s;
+}
+
+.groupWrapper {
+
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  height: 80vh;
+  overflow-y: scroll;
+  gap: 8px;
+  --animate-duration: 1s;
+}
+
+
+.animatedLabel {
+  position: absolute;
+  bottom: 0;
+  color: #00000050;
+}
+
+.animatedItem {
+  width: 35px;
+  height: 35px;
+  background-color: #3d5af180;
+}
+
+.groupHeader {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px;
+}
