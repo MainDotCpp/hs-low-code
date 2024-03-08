@@ -7,16 +7,23 @@ import {
   ProFormText,
   ProFormTextArea,
 } from '@ant-design/pro-components';
-import { message } from 'antd';
+import { Empty, message } from 'antd';
 
-const Component = ({ mode, copyText, delay, link, ...props }: any) => {
+const Component = ({ mode, copyText, delay, link, style, ...props }: any) => {
+  if (!props.src) return <Empty description='请上传图片' />;
   return (
     <>
       <img
         {...props}
+        style={{
+          ...style,
+          width: '100%',
+        }}
         alt=''
         onClick={async () => {
+          if (mode === 'edit') return;
           await navigator.clipboard.writeText(copyText);
+          if (!link) return;
           setTimeout(() => {
             window.open(link);
           }, delay);
