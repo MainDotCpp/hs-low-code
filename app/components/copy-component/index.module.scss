@@ -1,0 +1,22 @@
+
+.gallery {
+  display: flex;
+  gap: 2px;
+}
+.item {
+  width: 33%;
+  flex-shrink: 0;
+  transition: all 0.3s;
+  img {
+    width: 100%;
+    height: auto;
+  }
+}
+.active {
+    transform: scale(1.1);
+    z-index: 1;
+    box-shadow: 0 0 10px 0 #00000020;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+}

@@ -12,8 +12,14 @@ import { Button, message, Spin } from 'antd';
 import { useRequest } from 'ahooks';
 import { getPage, updatePageDocument } from '@/app/action/page-action';
 import { useRouter } from 'next/navigation';
-import { ProForm, ProFormColorPicker } from '@ant-design/pro-components';
+import {
+  ProForm,
+  ProFormColorPicker,
+  ProFormDigit,
+  ProFormSlider,
+} from '@ant-design/pro-components';
 import { Color } from 'antd/es/color-picker';
+import _ from 'lodash';
 
 const Page = ({ params }: { params: { pageId: string } }) => {
   const setPage = usePageStore((state) => state.setPage);
@@ -22,7 +28,10 @@ const Page = ({ params }: { params: { pageId: string } }) => {
       setPage(data!!.content as any);
     },
   });
-  const page = usePageStore((state) => state.page);
+  const page = usePageStore((state) => {
+    _.defaults(state.page, { style: { maxWidth: 400 } });
+    return state.page;
+  });
   const appendComponent = usePageStore((state) => state.appendComponent);
   const sortComponent = usePageStore((state) => state.sortComponent);
   const updateRoot = usePageStore((state) => state.updateRoot);
@@ -75,18 +84,29 @@ const Page = ({ params }: { params: { pageId: string } }) => {
             </div>
           </div>
           <div>
-            <ProForm
-              layout='inline'
-              initialValues={page}
-              submitter={false}
-              onValuesChange={updateRoot}>
-              <ProFormColorPicker
-                transform={(value: Color) => {
-                  return { style: { backgroundColor: `#${value.toHex()}` } };
-                }}
-                name={['style', 'backgroundColor']}
-                label='页面背景色'></ProFormColorPicker>
-            </ProForm>
+            {page && (
+              <ProForm
+                layout='inline'
+                initialValues={page}
+                submitter={false}
+                onValuesChange={updateRoot}>
+                <ProFormColorPicker
+                  transform={(value: Color | string) => {
+                    if (typeof value === 'string') return;
+                    return {
+                      style: { backgroundColor: `#${value?.toHex?.()}` },
+                    };
+                  }}
+                  name={['style', 'backgroundColor']}
+                  label='页面背景色'></ProFormColorPicker>
+                <ProFormDigit
+                  label={'页面宽度'}
+                  name={['style', 'maxWidth']}></ProFormDigit>
+                <ProFormSlider
+                  label='左右边距'
+                  name={['style', 'paddingInline']}></ProFormSlider>
+              </ProForm>
+            )}
           </div>
           <div className={styles.action}>
             <Button type='primary' onClick={onSavePage}>

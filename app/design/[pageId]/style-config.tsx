@@ -314,7 +314,7 @@ const StyleConfig = () => {
           if (typeof v === 'string') return;
           return {
             style: {
-              backgroundColor: `#${v.toHex()}`,
+              backgroundColor: `#${v?.toHex?.()}`,
             },
           };
         }}

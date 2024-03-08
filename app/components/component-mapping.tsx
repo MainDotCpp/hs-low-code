@@ -5,6 +5,8 @@ import SwiperComponent from '@/app/components/swiper-component';
 import CommentComponent from '@/app/components/comment-component';
 import { v4 } from 'uuid';
 import VideoComponent from '@/app/components/video-component';
+import GalleryComponent from '@/app/components/gallery-component';
+import CopyComponent from '@/app/components/copy-component';
 
 export const COMPONENT_MAPPING = {
   image: {
@@ -93,6 +95,27 @@ export const COMPONENT_MAPPING = {
       type: 'video',
       src: 'https://www.w3school.com.cn/i/movie.mp4',
       style: { width: '100%', boxSizing: 'border-box' },
+    },
+  },
+  gallery: {
+    ...GalleryComponent,
+    initValue: {
+      name: '画廊(开发中)',
+      type: 'gallery',
+      images: [
+        'https://fakeimg.pl/500x200/282828/eae0d0/?retina=1&text=IMAGE1',
+        'https://fakeimg.pl/500x200/282828/eae0d0/?retina=1&text=IMAGE2',
+        'https://fakeimg.pl/500x200/282828/eae0d0/?retina=1&text=IMAGE3',
+        'https://fakeimg.pl/500x200/282828/eae0d0/?retina=1&text=IMAGE4',
+        'https://fakeimg.pl/500x200/282828/eae0d0/?retina=1&text=IMAGE5',
+      ],
+    },
+  },
+  copy: {
+    ...CopyComponent,
+    initValue: {
+      name: '复制组件',
+      type: 'copy',
     },
   },
 };

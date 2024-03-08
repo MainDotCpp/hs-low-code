@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './render.css';
 import styles from './render.module.css';
 import { ComponentType, RootComponentType } from '@/app/components/components';
 import { Droppable } from 'react-beautiful-dnd';
 import Component from '@/app/components/component';
 import 'animate.css';
+import { WOW } from 'wowjs';
 import Script from 'next/script';
 const engine = (
   pageId: string,
@@ -38,9 +39,17 @@ const Render = ({
 }) => {
   return (
     <>
-      <Script src='https://cdn.bootcdn.net/ajax/libs/wow/1.1.2/wow.min.js'></Script>
-      <Script id='wow' strategy='worker'>
-        new WOW().init();
+      <Script
+        src='https://cdn.bootcdn.net/ajax/libs/wow/1.1.2/wow.min.js'
+        strategy={'beforeInteractive'}
+      />
+      <Script id='wow' strategy='beforeInteractive'>
+        {`
+          new WOW({
+          }).init();
+        document.onload = function () {
+        }
+        `}
       </Script>
       <Droppable droppableId={'root'}>
         {(provided, snapshot) => {
@@ -50,6 +59,7 @@ const Render = ({
                 style={data.style}
                 ref={provided.innerRef}
                 {...provided.droppableProps}
+                id='app'
                 className={`${styles.app} ${snapshot.isDraggingOver && styles.isOver}`}>
                 {engine(params?.pageId, data, mode)}
                 {provided.placeholder}

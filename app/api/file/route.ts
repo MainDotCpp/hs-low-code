@@ -31,6 +31,7 @@ export const POST = (req: NextRequest) => {
       ftp.put(buffer, name, (err) => {
         if (err) {
           console.log('上传失败', err);
+          ftp.destroy();
           reject(
             NextResponse.json({
               success: false,
@@ -38,6 +39,7 @@ export const POST = (req: NextRequest) => {
           );
         }
         console.log('上传成功');
+        ftp.destroy();
         resolve(
           NextResponse.json({
             success: true,

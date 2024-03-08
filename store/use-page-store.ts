@@ -50,6 +50,8 @@ export const usePageStore = create<{
     set(
       produce((state) => {
         state.page.children.splice(index, 0, component);
+        state.currentComponentId = component.id;
+        state.currentComponent = component;
         return state;
       }),
     );

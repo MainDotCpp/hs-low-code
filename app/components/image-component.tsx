@@ -26,9 +26,10 @@ const Component = ({ pageId, mode, ...props }: any) => {
         style={{
           display: 'block',
           cursor: props.link ? 'pointer' : 'default',
+          boxSizing: 'border-box',
           ...props.style,
           ...(mode === 'edit' ? { position: 'static' } : {}),
-          maxWidth: '430px',
+          width: props.style.position === 'fixed' ? '430px' : '100%',
         }}
         alt=''
         onClick={() => {
@@ -76,7 +77,7 @@ const Config = () => {
             label='距离底部'></ProFormDigit>
         </Col>
       </Row>
-      <FileUpload name='src' max={1} label='图片' />
+      <FileUpload name='src' max={1} label='图片' accept='image' />
       <ProFormText name='link' label='点击图片跳转地址' />
     </>
   );
