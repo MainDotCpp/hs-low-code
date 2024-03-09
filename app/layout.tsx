@@ -12,7 +12,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html>
+    <html className='bg-black/5'>
       <AntdRegistry>
         <body>{children}</body>
       </AntdRegistry>

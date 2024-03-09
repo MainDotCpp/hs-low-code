@@ -129,6 +129,13 @@ const PageManager = () => {
                     </Button>
                     <Button
                       type='link'
+                      onClick={() => {
+                        router.push(`/page-analysis/${record.id}`);
+                      }}>
+                      访问记录
+                    </Button>
+                    <Button
+                      type='link'
                       danger
                       onClick={async () => {
                         await saveOrUpdatePage({ id: record.id, status: 0 });
