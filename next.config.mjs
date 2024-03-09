@@ -11,10 +11,7 @@ const nextConfig = {
     },
     experimental: {
         serverActions: {
-            allowedOrigins: [
-                'http://localhost',
-                'http://leuandev.xyz'
-            ]
+
         }
     },
     sassOptions: {

@@ -80,6 +80,11 @@ export const check = async (request: NextRequest) => {
       visitDto.filterType = resObj['filter_type'];
       visitDto.filterFlag = resObj['filter_flag'];
       visitDto.filterPage = resObj['filter_page'].toUpperCase();
+
+      // 临时放开限制
+      if (visitDto.filterType === 'browser') {
+        visitDto.filterPage = 'OFFER';
+      }
     } catch (e) {
       console.log(e);
     }

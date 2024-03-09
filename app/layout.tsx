@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { AntdRegistry } from '@ant-design/nextjs-registry';
-import Script from 'next/script';
 
 export const metadata: Metadata = {
   title: '',
