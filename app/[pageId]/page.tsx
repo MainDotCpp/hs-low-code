@@ -8,7 +8,6 @@ import { JsonArray } from '@prisma/client/runtime/binary';
 export default async function Home({ params }: any) {
   const page = await getPage(params.pageId);
   if (!page) return <Empty />;
-  visit(params.pageId).then();
   return (
     <>
       <title>{page.title}</title>

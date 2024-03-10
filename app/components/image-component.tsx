@@ -12,7 +12,7 @@ import { Col, Grid, Row } from 'antd';
 import useFormInstance = ProForm.useFormInstance;
 import { clickLink } from '@/app/action/page-action';
 
-const Component = ({ pageId, mode, ...props }: any) => {
+const Component = ({ pageId, mode, className, ...props }: any) => {
   return (
     <>
       {mode === 'edit' && props.link && (
@@ -23,13 +23,14 @@ const Component = ({ pageId, mode, ...props }: any) => {
       )}
       <img
         {...props}
+        className={className}
         style={{
           display: 'block',
           cursor: props.link ? 'pointer' : 'default',
           boxSizing: 'border-box',
           ...props.style,
           ...(mode === 'edit' ? { position: 'static' } : {}),
-          width: props.style.position === 'fixed' ? '430px' : '100%',
+          ...(props.style.position === 'fixed' ? { maxWidth: '430px' } : {}),
         }}
         alt=''
         onClick={() => {

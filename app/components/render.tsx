@@ -55,7 +55,7 @@ const Render = ({
           return (
             <>
               <div
-                style={data.style}
+                style={{ maxWidth: 400, ...data.style }}
                 ref={provided.innerRef}
                 {...provided.droppableProps}
                 id='app'

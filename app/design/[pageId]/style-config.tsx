@@ -320,10 +320,21 @@ const StyleConfig = () => {
         }}
         name={['style', 'backgroundColor']}></ProFormColorPicker>
       <ProFormGroup grid>
-        <Col span={12}>
+        <Col span={8}>
+          <ProFormSelect
+            name={['style', 'justifySelf']}
+            label='位置'
+            initialValue='start'
+            valueEnum={{
+              start: '左',
+              end: '右',
+              center: '居中',
+            }}></ProFormSelect>
+        </Col>
+        <Col span={8}>
           <ProFormText name={['style', 'width']} label='宽度'></ProFormText>
         </Col>
-        <Col span={12}>
+        <Col span={8}>
           <ProFormText name={['style', 'height']} label='高度'></ProFormText>
         </Col>
         <Col span={12}>

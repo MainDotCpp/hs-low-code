@@ -57,7 +57,7 @@ export default function Component({
             onClick={() => {
               if (mode === 'edit' && props.id) setCurrentComponentId(props.id);
             }}
-            className={` ${props.id && currentComponentId === props.id ? styles.activeComponent : ''}`}>
+            className={` ${props.id && currentComponentId === props.id ? styles.activeComponent : ''} grid`}>
             {el}
           </div>
         );
