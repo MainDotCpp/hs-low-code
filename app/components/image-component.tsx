@@ -2,15 +2,14 @@ import React from 'react';
 import {
   ProForm,
   ProFormDigit,
-  ProFormGroup,
   ProFormSelect,
   ProFormText,
 } from '@ant-design/pro-components';
 import styles from './image-component.module.scss';
 import FileUpload from '@/app/components/file-upload';
-import { Col, Grid, Row } from 'antd';
-import useFormInstance = ProForm.useFormInstance;
+import { Col, Row } from 'antd';
 import { clickLink } from '@/app/action/page-action';
+import useFormInstance = ProForm.useFormInstance;
 
 const Component = ({ pageId, mode, className, ...props }: any) => {
   return (
