@@ -9,7 +9,7 @@ export default function OAuthKK(){
     const getToken = async (code:string) => {
         const form = new FormData()
         form.set('grant_type','authorization_code')
-        form.set('client_id','6e65c2c625e239d40305df1f0ef53b5b')
+        form.set('client_id','f4e5d6f648ab7c61ca77f7c17bf73614')
         form.set('redirect_uri','https://leuandev.xyz/oauth/kk')
         form.set('code',code)
         const getTokenResp = await fetch('https://kauth.kakao.com/oauth/token',{
