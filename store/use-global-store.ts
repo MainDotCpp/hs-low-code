@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { combine } from 'zustand/middleware';
 
-export const global = create(
+export const useGlobalStore = create(
   combine(
     {
       pageId: '1',
